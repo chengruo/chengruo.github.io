@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>写点东西吧</title>
-    <link>https://chengruo.github.io/</link>
-    <description>Recent content on 写点东西吧</description>
+    <title>网络s on 写点东西吧</title>
+    <link>https://chengruo.github.io/%E7%BD%91%E7%BB%9C/</link>
+    <description>Recent content in 网络s on 写点东西吧</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Jul 2023 20:28:01 +0800</lastBuildDate><atom:link href="https://chengruo.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>First</title>
-      <link>https://chengruo.github.io/post/first/</link>
-      <pubDate>Mon, 10 Jul 2023 20:28:01 +0800</pubDate>
-      
-      <guid>https://chengruo.github.io/post/first/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Mon, 10 Jul 2023 20:28:01 +0800</lastBuildDate><atom:link href="https://chengruo.github.io/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>tls握手</title>
       <link>https://chengruo.github.io/%E7%BD%91%E7%BB%9C/tls%E6%8F%A1%E6%89%8B/</link>

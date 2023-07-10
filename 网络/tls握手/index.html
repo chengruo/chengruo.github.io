@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>tls握手 // 写点东西吧</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.113.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="kalista" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="tls握手"/>
+<meta name="twitter:description" content="tls握手 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
+server hello 服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥
+Certificate 服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥
+Server key exchange &amp; hello done server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。
+hello done: 通知客户端hello 过程结束
+Client key exchange &amp; change cipher spec &amp; encrypted handshake msg 客户端收到服务端传来的证书后，先从 CA 验证该证书的合法性，验证通过后取出证书中的服务端公钥，再生成一个随机数 Random3，再用服务端公钥非对称加密 Random3生成 PreMaster Key。
+Client Key Exchange 就是将这个 key 传给服务端，服务端再用自己的私钥解出这个 PreMaster Key 得到客户端生成的 Random3。至此，客户端和服务端都拥有 Random1 &#43; Random2 &#43; Random3，两边再根据同样的算法就可以生成一份秘钥，握手结束后的应用层数据都是使用这个秘钥进行对称加密。为什么要使用三个随机数呢？这是因为 SSL/TLS 握手过程的数据都是明文传输的，并且多个随机数种子来生成秘钥不容易被暴力破解出来。
+Change cipher spec ：客户端通知服务端后面再发送的消息都会使用前面协商出来的秘钥加密了，是一条事件消息。
+encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面的握手消息生成摘要再用协商好的秘钥加密，这是客户端发出的第一条加密消息。服务端接收后会用秘钥解密，能解出来说明前面协商出来的秘钥是一致的。"/>
+
+    <meta property="og:title" content="tls握手" />
+<meta property="og:description" content="tls握手 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
+server hello 服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥
+Certificate 服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥
+Server key exchange &amp; hello done server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。
+hello done: 通知客户端hello 过程结束
+Client key exchange &amp; change cipher spec &amp; encrypted handshake msg 客户端收到服务端传来的证书后，先从 CA 验证该证书的合法性，验证通过后取出证书中的服务端公钥，再生成一个随机数 Random3，再用服务端公钥非对称加密 Random3生成 PreMaster Key。
+Client Key Exchange 就是将这个 key 传给服务端，服务端再用自己的私钥解出这个 PreMaster Key 得到客户端生成的 Random3。至此，客户端和服务端都拥有 Random1 &#43; Random2 &#43; Random3，两边再根据同样的算法就可以生成一份秘钥，握手结束后的应用层数据都是使用这个秘钥进行对称加密。为什么要使用三个随机数呢？这是因为 SSL/TLS 握手过程的数据都是明文传输的，并且多个随机数种子来生成秘钥不容易被暴力破解出来。
+Change cipher spec ：客户端通知服务端后面再发送的消息都会使用前面协商出来的秘钥加密了，是一条事件消息。
+encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面的握手消息生成摘要再用协商好的秘钥加密，这是客户端发出的第一条加密消息。服务端接收后会用秘钥解密，能解出来说明前面协商出来的秘钥是一致的。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://chengruo.github.io/%E7%BD%91%E7%BB%9C/tls%E6%8F%A1%E6%89%8B/" /><meta property="article:section" content="网络" />
+<meta property="article:published_time" content="2023-07-10T20:28:01+08:00" />
+<meta property="article:modified_time" content="2023-07-10T20:28:01+08:00" />
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://chengruo.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="kalista" /></a>
+      <span class="app-header-title">写点东西吧</span>
+      <p>静下心来</p>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">tls握手</h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jul 10, 2023
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          1 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h1 id="tls握手">tls握手</h1>
+<p><img src="images/tls%E6%8F%A1%E6%89%8B.jpg" alt="tls握手"></p>
+<h2 id="client-hello">client hello</h2>
+<p>客户端向服务端发送client  hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息</p>
+<p><img src="images/clienthello.jpg" alt="client hello"></p>
+<h2 id="server-hello">server hello</h2>
+<p>服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥</p>
+<p><img src="images/serverhello.jpg" alt="server hello"></p>
+<h2 id="certificate">Certificate</h2>
+<p>服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥</p>
+<h2 id="server-key-exchange--hello-done">Server key exchange &amp; hello done</h2>
+<p><img src="images/serverExchange&amp;serverHelloDone.jpg" alt="server key exchange&amp;hello done"></p>
+<p>server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。</p>
+<p>hello done: 通知客户端hello 过程结束</p>
+<h2 id="client-key-exchange--change-cipher-spec--encrypted-handshake-msg">Client key exchange &amp; change cipher spec &amp; encrypted handshake msg</h2>
+<p><img src="images/clientKeyExchange&amp;changeCipherSpec&amp;EncryptedHandShakeMessage.jpg" alt="Client key exchange &amp; change cipher spec &amp; encrypted handshake msg"></p>
+<p>客户端收到服务端传来的证书后，先从 CA 验证该证书的合法性，验证通过后取出证书中的服务端公钥，再生成一个随机数 Random3，再用服务端公钥非对称加密 Random3生成 PreMaster Key。</p>
+<p>Client Key Exchange 就是将这个 key 传给服务端，服务端再用自己的私钥解出这个 PreMaster Key 得到客户端生成的 Random3。至此，客户端和服务端都拥有 Random1 + Random2 + Random3，两边再根据同样的算法就可以生成一份秘钥，握手结束后的应用层数据都是使用这个秘钥进行对称加密。为什么要使用三个随机数呢？这是因为 SSL/TLS 握手过程的数据都是明文传输的，并且多个随机数种子来生成秘钥不容易被暴力破解出来。</p>
+<p>Change cipher spec ：客户端通知服务端后面再发送的消息都会使用前面协商出来的秘钥加密了，是一条事件消息。</p>
+<p>encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面的握手消息生成摘要再用协商好的秘钥加密，这是客户端发出的第一条加密消息。服务端接收后会用秘钥解密，能解出来说明前面协商出来的秘钥是一致的。</p>
+<h2 id="change--cipher-specserver--encrypted-handshake-msg-server">change  cipher spec（server） &amp; encrypted handshake msg （server）</h2>
+<p><img src="images/serverChangeCipherSpec.jpg" alt="serverChangeCipherSpec.jpg"></p>
+<p>服务端通知客户端后面再发送的消息都会使用加密，也是一条事件消息。</p>
+<p>Server Finish 消息，服务端也会将握手过程的消息生成摘要再用秘钥加密，这是服务端发出的第一条加密消息。客户端接收后会用秘钥解密，能解出来说明协商的秘钥是一致的。</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
