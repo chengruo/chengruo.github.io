@@ -8,12 +8,12 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 10 Jul 2023 20:28:01 +0800</lastBuildDate><atom:link href="https://chengruo.github.io/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>tls握手</title>
+      <title>tls握手过程</title>
       <link>https://chengruo.github.io/%E7%BD%91%E7%BB%9C/tls%E6%8F%A1%E6%89%8B/</link>
       <pubDate>Mon, 10 Jul 2023 20:28:01 +0800</pubDate>
       
       <guid>https://chengruo.github.io/%E7%BD%91%E7%BB%9C/tls%E6%8F%A1%E6%89%8B/</guid>
-      <description>tls握手 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
+      <description>tls握手过程 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
 server hello 服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥
 Certificate 服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥
 Server key exchange &amp;amp; hello done server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。

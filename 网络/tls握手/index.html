@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en-us">
   <head>
-    <title>tls握手 // 写点东西吧</title>
+    <title>tls握手过程 // 写点东西吧</title>
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta charset="utf-8" />
     <meta name="generator" content="Hugo 0.113.0">
@@ -12,8 +12,8 @@
 
     
     <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="tls握手"/>
-<meta name="twitter:description" content="tls握手 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
+<meta name="twitter:title" content="tls握手过程"/>
+<meta name="twitter:description" content="tls握手过程 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
 server hello 服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥
 Certificate 服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥
 Server key exchange &amp; hello done server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。
@@ -23,8 +23,8 @@ Client Key Exchange 就是将这个 key 传给服务端，服务端再用自己�
 Change cipher spec ：客户端通知服务端后面再发送的消息都会使用前面协商出来的秘钥加密了，是一条事件消息。
 encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面的握手消息生成摘要再用协商好的秘钥加密，这是客户端发出的第一条加密消息。服务端接收后会用秘钥解密，能解出来说明前面协商出来的秘钥是一致的。"/>
 
-    <meta property="og:title" content="tls握手" />
-<meta property="og:description" content="tls握手 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
+    <meta property="og:title" content="tls握手过程" />
+<meta property="og:description" content="tls握手过程 client hello 客户端向服务端发送client hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息
 server hello 服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥
 Certificate 服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥
 Server key exchange &amp; hello done server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。
@@ -50,7 +50,7 @@ encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面
       
   <article class="post">
     <header class="post-header">
-      <h1 class ="post-title">tls握手</h1>
+      <h1 class ="post-title">tls握手过程</h1>
       <div class="post-meta">
         <div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
@@ -69,28 +69,28 @@ encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面
       </div>
     </header>
     <div class="post-content">
-      <h1 id="tls握手">tls握手</h1>
-<p><img src="images/tls%E6%8F%A1%E6%89%8B.jpg" alt="tls握手"></p>
+      <h1 id="tls握手过程">tls握手过程</h1>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/tls%E6%8F%A1%E6%89%8B.jpg" alt="tls握手"></p>
 <h2 id="client-hello">client hello</h2>
 <p>客户端向服务端发送client  hello消息，包含客户端生成的随机数 Random1、客户端支持的加密套件（Support Ciphers）和 SSL Version 等信息</p>
-<p><img src="images/clienthello.jpg" alt="client hello"></p>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/clienthello.jpg" alt="client hello"></p>
 <h2 id="server-hello">server hello</h2>
 <p>服务端确定一份加密套件，套件决定后续加密和hash使用哪些算法，另外生成了一份随机数，用于后续生成对称密钥</p>
-<p><img src="images/serverhello.jpg" alt="server hello"></p>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/serverhello.jpg" alt="server hello"></p>
 <h2 id="certificate">Certificate</h2>
 <p>服务端将自己的证书下发给客户端，让客户端验证自己身份，客户端验证通过后取出证书中的公钥</p>
 <h2 id="server-key-exchange--hello-done">Server key exchange &amp; hello done</h2>
-<p><img src="images/serverExchange&amp;serverHelloDone.jpg" alt="server key exchange&amp;hello done"></p>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/serverExchange&amp;serverHelloDone.jpg" alt="server key exchange&amp;hello done"></p>
 <p>server key exchange: 如果是DH算法，这里发送服务器使用的DH参数。RSA算法不需要这一步。</p>
 <p>hello done: 通知客户端hello 过程结束</p>
 <h2 id="client-key-exchange--change-cipher-spec--encrypted-handshake-msg">Client key exchange &amp; change cipher spec &amp; encrypted handshake msg</h2>
-<p><img src="images/clientKeyExchange&amp;changeCipherSpec&amp;EncryptedHandShakeMessage.jpg" alt="Client key exchange &amp; change cipher spec &amp; encrypted handshake msg"></p>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/clientKeyExchange&amp;changeCipherSpec&amp;EncryptedHandShakeMessage.jpg" alt="Client key exchange &amp; change cipher spec &amp; encrypted handshake msg"></p>
 <p>客户端收到服务端传来的证书后，先从 CA 验证该证书的合法性，验证通过后取出证书中的服务端公钥，再生成一个随机数 Random3，再用服务端公钥非对称加密 Random3生成 PreMaster Key。</p>
 <p>Client Key Exchange 就是将这个 key 传给服务端，服务端再用自己的私钥解出这个 PreMaster Key 得到客户端生成的 Random3。至此，客户端和服务端都拥有 Random1 + Random2 + Random3，两边再根据同样的算法就可以生成一份秘钥，握手结束后的应用层数据都是使用这个秘钥进行对称加密。为什么要使用三个随机数呢？这是因为 SSL/TLS 握手过程的数据都是明文传输的，并且多个随机数种子来生成秘钥不容易被暴力破解出来。</p>
 <p>Change cipher spec ：客户端通知服务端后面再发送的消息都会使用前面协商出来的秘钥加密了，是一条事件消息。</p>
 <p>encrypted handshake msg：对应的是 Client Finish 消息，客户端将前面的握手消息生成摘要再用协商好的秘钥加密，这是客户端发出的第一条加密消息。服务端接收后会用秘钥解密，能解出来说明前面协商出来的秘钥是一致的。</p>
 <h2 id="change--cipher-specserver--encrypted-handshake-msg-server">change  cipher spec（server） &amp; encrypted handshake msg （server）</h2>
-<p><img src="images/serverChangeCipherSpec.jpg" alt="serverChangeCipherSpec.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/chengruo/blog-img/main/serverChangeCipherSpec.jpg" alt="serverChangeCipherSpec.jpg"></p>
 <p>服务端通知客户端后面再发送的消息都会使用加密，也是一条事件消息。</p>
 <p>Server Finish 消息，服务端也会将握手过程的消息生成摘要再用秘钥加密，这是服务端发出的第一条加密消息。客户端接收后会用秘钥解密，能解出来说明协商的秘钥是一致的。</p>
 
